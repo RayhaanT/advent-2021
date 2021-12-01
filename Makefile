@@ -1,0 +1,37 @@
+CC = gcc
+CXX = g++
+
+CFLAGS = -g $(INCLUDES)
+CXXFLAGS = -g $(INCLUDES)
+INCLUDES = 
+TARGET = advent
+
+day = 0
+BIN = bin
+SRC_DIR = Day$(day)
+inc_dir = include
+lib_dir = lib
+
+TARGET = out
+CPP_SRC = $(shell find $(SRC_DIR) -type f -name "*.cpp")
+C_SRC = $(shell find $(SRC_DIR) -type f -name "*.c")
+SRC_OBJS = $(CPP_SRC:.cpp=.o) $(C_SRC:.c=.o)
+OBJS = $(patsubst $(SRC_DIR)/%,$(BIN)/%,$(SRC_OBJS))
+
+all: $(TARGET)
+
+$(BIN)/%.o: $(SRC_DIR)/%.cpp 
+	@mkdir -p $(@D)
+	$(CXX) -c $(CXXFLAGS) -o $@ $<
+
+$(BIN)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(@D)
+	$(CC) -c $(CFLAGS) -o $@ $<
+
+$(TARGET): $(OBJS)
+	$(CXX) -o $@ $^ $(LDFLAGS)
+
+.PHONY : clean
+clean :
+	$(RM) $(BIN)/*
+	$(RM) $(TARGET)
