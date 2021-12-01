@@ -13,10 +13,13 @@ inc_dir = include
 lib_dir = lib
 
 TARGET = out
-CPP_SRC = $(shell find $(SRC_DIR) -type f -name "*.cpp")
-C_SRC = $(shell find $(SRC_DIR) -type f -name "*.c")
-SRC_OBJS = $(CPP_SRC:.cpp=.o) $(C_SRC:.c=.o)
-OBJS = $(patsubst $(SRC_DIR)/%,$(BIN)/%,$(SRC_OBJS))
+# Generate only if not clean. Otherwise produces error messages b/c of Day0
+ifneq (clean,$(filter clean,$(MAKECMDGOALS)))
+	CPP_SRC = $(shell find $(SRC_DIR) -type f -name "*.cpp")
+	C_SRC = $(shell find $(SRC_DIR) -type f -name "*.c")
+	SRC_OBJS = $(CPP_SRC:.cpp=.o) $(C_SRC:.c=.o)
+	OBJS = $(patsubst $(SRC_DIR)/%,$(BIN)/%,$(SRC_OBJS))
+endif
 
 all: $(TARGET)
 
