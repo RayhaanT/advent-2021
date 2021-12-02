@@ -2,6 +2,6 @@
 
 Code for my Advent of Code 2021 attempts.
 
-Written in Python/C/C++ (depending on how fast I wanted to be or how difficult the problem appeared)
+Written in Python/C/C++. Python is generally written first for speed and then translated to C later.
 
 `make day=[i]` will compile C solutions for the ith day into the executable `out`.

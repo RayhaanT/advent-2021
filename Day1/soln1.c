@@ -20,8 +20,6 @@ int main() {
     int i = 0;
     fscanf(input, "%d", &depth);
     while (!feof(input)) {
-        printf("%d\n", depth);
-
         if (i > 2) {
             window[0] = window[1];
             window[1] = window[2];

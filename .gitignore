@@ -1,4 +1,3 @@
-# Non-code and binaries
-/inputs
+# binaries
 /bin
-out
+out*

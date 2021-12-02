@@ -12,7 +12,8 @@ SRC_DIR = Day$(day)
 inc_dir = include
 lib_dir = lib
 
-TARGET = out
+TARGET_BASE = out
+TARGET = $(TARGET_BASE)$(day)
 # Generate only if not clean. Otherwise produces error messages b/c of Day0
 ifneq (clean,$(filter clean,$(MAKECMDGOALS)))
 	CPP_SRC = $(shell find $(SRC_DIR) -type f -name "*.cpp")
@@ -33,8 +34,9 @@ $(BIN)/%.o: $(SRC_DIR)/%.c
 
 $(TARGET): $(OBJS)
 	$(CXX) -o $@ $^ $(LDFLAGS)
+	./$(TARGET)
 
 .PHONY : clean
 clean :
 	$(RM) $(BIN)/*
-	$(RM) $(TARGET)
+	$(RM) $(TARGET_BASE)*
