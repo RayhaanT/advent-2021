@@ -1,7 +1,7 @@
 # Advent of Code 2021
 
-Code for my Advent of Code 2021 attempts.
+Code for my Advent of Code 2021 solutions.
 
-Written in Python/C/C++. Python is generally written first for speed and then translated to C later.
+Written in Python/C/C++.
 
-`make day=[i]` will compile C solutions for the ith day into the executable `out`.
+`make day=[i]` will compile C solutions for the ith day into the executable `out[i]`.
