@@ -1,5 +1,3 @@
-from dataclasses import dataclass
-
 inFile = open('../inputs/Day4.txt')
 lines = inFile.readlines()
 
@@ -26,10 +24,10 @@ def checkCol(board, col):
         if r[col].state == False:
             return False
     return True
-    
 
 del lines[0]
 del lines[0]
+
 newBoard = []
 for l in lines:
     if(l == '\n'):
@@ -52,55 +50,31 @@ def sumRow(row):
             total += s.num
     return total
 
-def sumCol(board, col):
-    total = 0
-    for r in baord:
-        if r[col].state == False:
-            total += r[col].num
-    return total
-
 def sumBoard(board):
     total = 0
     for r in board:
         total += sumRow(r)
     return total
 
-def helper(draws, boards):
-    for d in draws:
-        for b in boards:
-            for row in b:
-                for r in range(0, len(row)):
-                    if row[r].num == d:
-                        row[r].state = True
-                        if checkRow(b, row[r].row):
-                            print("First: " + str(sumBoard(b) * d))
-                            return
-                        if checkCol(b, r):
-                            print("First: " + str(sumBoard(b) * d))
-                            return
-
-helper(draws, boards)
-
-def helper2(draws, boards):
+def playBingo(draws, boards):
+    first = True
     for d in draws:
         length = len(boards)
         deleted = 0
         for b in range(0, length):
-            for r in boards[b - deleted]:
+            ind = b - deleted # Prevent out of range after deleting solved boards
+            for r in boards[ind]:
                 for s in range(0, len(r)):
                     if r[s].num == d:
                         r[s].state = True
-                        if checkRow(boards[b - deleted], r[s].row) or checkCol(boards[b - deleted], s):
+                        if checkRow(boards[ind], r[s].row) or checkCol(boards[ind], s):
+                            if first:
+                                print("First: " + str(sumBoard(boards[ind]) * d))
+                                first = False
                             if len(boards) == 1:
-                                print("Second: " + str(sumBoard(boards[0]) * d))
+                                print("Second: " + str(sumBoard(boards[ind]) * d))
                                 return
-                            del boards[b - deleted]
+                            del boards[ind]
                             deleted += 1
 
-# Reset for part 2
-for b in boards:
-    for r in b:
-        for s in range(0, len(r)):
-            r[s].state = False
-
-helper2(draws, boards)
+playBingo(draws, boards)
