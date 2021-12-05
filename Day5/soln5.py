@@ -9,18 +9,24 @@ class Coord:
         self.x = x
         self.y = y
 
+    def __add__(self, other):
+        return Coord(self.x + other.x, self.y + other.y)
+
+    def __eq__(self, other):
+        return self.x == other.x and self.y == other.y
+
 class VentLine:
     def __init__(self, start, end):
         self.start = start
         self.end = end
-        length = math.sqrt((end.x - start.x)**2 + (end.y - start.y)**2)
+
+        if end == start:
+            self.slope = Coord(0, 0)
+            return
 
         multX = -1 if end.x - start.x < 0 else 1
         multY = -1 if end.y - start.y < 0 else 1
 
-        if math.ceil(length) == 0:
-            self.slope = Coord(0, 0)
-            return
         if end.y - start.y == 0:
             self.slope = Coord(multX, 0)
             return
@@ -46,7 +52,10 @@ height = 0
 def printMap(m):
     for r in m:
         for n in r:
-            print(n, end = '')
+            if n == 0:
+                print('.', end = '')
+            else:
+                print(n, end = '')
         print('')
     print('-----------------')
 
@@ -62,6 +71,7 @@ for l in lines:
 
     sizeCheckX = max(vent.start.x, vent.end.x) + 1
     sizeCheckY = max(vent.start.y, vent.end.y) + 1
+
     if width < sizeCheckX:
         for r in range(0, len(floorMap)):
             for x in range(0, sizeCheckX - width):
@@ -78,9 +88,9 @@ for l in lines:
     update = vent.start
     while True:
         floorMap[update.y][update.x] += 1
-        if update.x == vent.end.x and update.y == vent.end.y:
+        if update == vent.end:
             break
-        update = Coord(update.x + vent.slope.x, update.y + vent.slope.y)
+        update += vent.slope
 
 total = 0
 for r in floorMap:
@@ -88,5 +98,7 @@ for r in floorMap:
         if n > 1:
             total +=1 
 
+# Comment clause excluding diagonals in for loop for this answer
 # print("First: " + str(total))
 print("Second: " + str(total))
+print("See file and comments for other solution")
