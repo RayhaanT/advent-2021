@@ -41,7 +41,7 @@ int main() {
     
     int length = strlen(line) / 2;
 
-    double *fish = (double *) malloc(MAX_FISH_PD + 2 * sizeof(double));
+    double *fish = (double *) malloc((MAX_FISH_PD + 2) * sizeof(double));
 
     for (int i = 0; i < MAX_FISH_PD + 2; i++) {
         fish[i] = 0;
