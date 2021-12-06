@@ -1,3 +1,4 @@
 # binaries
 /bin
 out*
+compile_commands.json

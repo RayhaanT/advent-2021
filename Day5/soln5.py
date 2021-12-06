@@ -1,4 +1,3 @@
-import math
 from fractions import Fraction
 
 inFile = open('../inputs/Day5.txt')
@@ -36,11 +35,8 @@ class VentLine:
 
 def parseLine(l):
     arr = l.split()
-    try:
-        first = arr[0].split(',')
-        second = arr[2].split(',')
-    except IndexError:
-        print(arr)
+    first = arr[0].split(',')
+    second = arr[2].split(',')
     return VentLine(
         Coord(int(first[0]), int(first[1])),
         Coord(int(second[0]), int(second[1])))
