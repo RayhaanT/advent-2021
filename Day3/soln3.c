@@ -2,6 +2,7 @@
 #include <string.h>
 #include "fileUtils.h"
 #include <math.h>
+#include <stdbool.h>
 
 unsigned int binToDec(char *bin) {
     double total = 0;
@@ -16,61 +17,107 @@ unsigned int binToDec(char *bin) {
     return (unsigned int)total;
 }
 
-char * mostCommon(char **list, int length, int width) {
-    int *sum = (int *) malloc(width * sizeof(int));
-    char *common = (char *) malloc(width * sizeof(char));
+int mostCommonDigit(int *list, int length, int index, bool favourHigh) {
+    int map = pow(2, index);
+    int sum = 0;
+    int effectiveLength = length;
+    for(int i = 0; i < length; i++) {
+        if(list[i] < 0) {
+            effectiveLength--;
+            continue;
+        }
+        if(list[i] & map) {
+            sum++;
+        }
+    }
 
-    for(int w = 0; w < width; w++) {
-        sum[w] = 0;
-        for(int i = 0; i < length; i++) {
-            if(list[i][w] == '1') {
-                sum[w] += 1;
-            }
-        }
-        if (sum[w] * 2 > length) {
-            common[w] = '1';
-        }
-        else {
-            common[w] = '0';
-        }
+    int common = sum * 2 > effectiveLength ? map : 0;
+    if(favourHigh && sum * 2 == effectiveLength) {
+        common = map;
     }
 
     return common;
 }
 
+int mostCommon(int *list, int length, int width) {
+    int common = 0;
+    for(int i = 0; i < width; i++) {
+        common += mostCommonDigit(list, length, i, false);
+    }
+
+    return common;
+}
+
+int getReading(int *codes, int length) {
+    int survivor = -1;
+    for(int i = 0; i < length; i++) {
+        if(codes[i] != -1) {
+            if (survivor != -1) {
+                return -1;
+            }
+            survivor = codes[i];
+            continue;
+        }
+    }
+    return survivor;
+}
+
 int main() {
     int length;
     char ** lines = getInputLines(3, &length);
+    int *codes = (int *) malloc(length * sizeof(int));
+    int width = strlen(lines[0]);
 
-    printf("%s\n", mostCommon(lines, length, 12));
-    
-    printf("%d\n", binToDec(mostCommon(lines, length, 12)));
-/*    int totalLines = 1000;
-    FILE *input = getInput(3);
-    if (input == NULL) {
-        exit(EXIT_FAILURE);
+    for(int i = 0; i < length; i++) {
+        codes[i] = binToDec(lines[i]);
     }
 
-    char **all = malloc(totalLines * sizeof(char *));
+    int common = mostCommon(codes, length, width);
+    int first = common * (pow(2, width) - 1 - common);
+    printf("First: %d\n", first);
 
-    ssize_t read;
-    char * line = NULL;
-    size_t len = 0;
+    int *storeCodes = malloc(length * sizeof(int));
+    memcpy(storeCodes, codes, length * sizeof(int));
 
-    read = getline(&line, &len, input);
-    line[strlen(line) - 1] = '\0';
-    int strLength = strlen(line);
+    int reading;
+    int index = 0;
 
-    for(int i = 0; i < totalLines; i++) {
-        all[i] = malloc(strLength * sizeof(char));
+    while((reading = getReading(codes, length)) == -1 && index < width) {
+        int target = mostCommonDigit(codes, length, width - index - 1, true);
+        int map = pow(2, width - index - 1);
+        for(int i = 0; i < length; i++) {
+            if(codes[i] < 0) {
+                continue;
+            }
+            if((codes[i] & map) != target) {
+                codes[i] = -1;
+            }
+        }
+        index++;
     }
-    all[0] = line;
+    int oxygen = reading;
 
-    int index = 1;
-    while ((read = getline(&line, &len, input)) != -1) {
-        line[strlen(line) - 1] = '\0';
-        all[index] = line;
+    index = 0;
+
+    // This is almost the same as the first but I was too lazy to abstract it
+    memcpy(codes, storeCodes, length * sizeof(int));
+    while((reading = getReading(codes, length)) == -1 && index < width) {
+        int target = mostCommonDigit(codes, length, width - index - 1, true);
+        int map = pow(2, width - index - 1);
+        for(int i = 0; i < length; i++) {
+            if(codes[i] < 0) {
+                continue;
+            }
+            if((codes[i] & map) == target) {
+                codes[i] = -1;
+            } else {
+            }
+        }
+        index++;
     }
+    int co2 = reading;
 
-  */  
+    printf("Second: %d\n", oxygen * co2);
+
+    return 0;
 }
