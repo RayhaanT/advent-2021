@@ -1,19 +1,6 @@
 inFile = open('../inputs/Day8.txt')
 lines = inFile.readlines()
 
-numberCodes = [
-    'abc efg',
-    '  c  f ',
-    'a cde g',
-    'a cd fg',
-    ' bcd f ',
-    'ab d fg',
-    'ab defg',
-    'a c  f ',
-    'abcdefg',
-    'abcd fg'
-]
-
 def match(a, b):
     for c in a:
         if c not in b:

@@ -39,7 +39,6 @@ $(BIN)/%.o: $(SRC_DIR)/%.c
 
 $(TARGET): $(OBJS)
 	$(CXX) -o $@ $^ $(LDFLAGS)
-	./$(TARGET)
 
 .PHONY : clean
 clean :
