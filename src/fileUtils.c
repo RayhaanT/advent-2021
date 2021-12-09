@@ -84,3 +84,11 @@ int getFileSize(int day) {
 
     return lines;
 }
+
+int intComparator (const void * aP, const void * bP) {
+    int a = *((int*)aP);
+    int b = *((int*)bP);
+    if (a > b) return  1;
+    if (b < a) return -1;
+    return 0;
+}
