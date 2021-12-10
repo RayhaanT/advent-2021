@@ -1,5 +1,9 @@
-inFile = open('../inputs/Day4.txt')
-lines = inFile.readlines()
+import os
+dirname = os.path.dirname(__file__)
+inputPath = os.path.join(dirname, '../inputs/Day4.txt')
+
+with open(inputPath) as file:
+    lines = file.readlines()
 
 class Square:
   def __init__(self, num, state, row):
@@ -7,9 +11,7 @@ class Square:
     self.state = state
     self.row = row
 
-draws = lines[0].strip().split(',')
-for d in range(0, len(draws)):
-    draws[d] = int(draws[d])
+draws = (int(c) for c in lines[0].strip().split(','))
 
 boards = []
 

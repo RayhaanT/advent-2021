@@ -1,5 +1,9 @@
-inFile = open('../inputs/Day6.txt')
-lines = inFile.readlines()
+import os
+dirname = os.path.dirname(__file__)
+inputPath = os.path.join(dirname, '../inputs/Day6.txt')
+
+with open(inputPath) as file:
+    lines = file.readlines()
 
 ages = lines[0].split(',')
 ages = [int(x) for x in ages]

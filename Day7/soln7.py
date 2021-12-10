@@ -1,8 +1,12 @@
 import statistics
 import math
+import os
 
-inFile = open('../inputs/Day7.txt')
-lines = inFile.readlines()
+dirname = os.path.dirname(__file__)
+inputPath = os.path.join(dirname, '../inputs/Day7.txt')
+
+with open(inputPath) as file:
+    lines = file.readlines()
 
 positions = [int(x) for x in lines[0].split(',')]
 target = statistics.median(positions)
@@ -27,5 +31,3 @@ for p in positions:
     lowTotal += sumTo(abs(p - lowMean))
 
 print("Second: " + str(min(lowTotal, highTotal)))
-print(lowMean)
-print(highMean)

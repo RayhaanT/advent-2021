@@ -1,11 +1,15 @@
+import os
+dirname = os.path.dirname(__file__)
+inputPath = os.path.join(dirname, '../inputs/Day2.txt')
+
+with open(inputPath) as file:
+    lines = file.readlines()
+
 depth = 0
 horizontal = 0
 aim = 0
 
-while (True):
-    line = input()
-    if line == "done":
-        break
+for line in lines:
     arr = line.split()
     if arr[0] == "forward":
         horizontal += int(arr[1])

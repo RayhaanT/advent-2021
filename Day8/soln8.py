@@ -1,5 +1,9 @@
-inFile = open('../inputs/Day8.txt')
-lines = inFile.readlines()
+import os
+dirname = os.path.dirname(__file__)
+inputPath = os.path.join(dirname, '../inputs/Day8.txt')
+
+with open(inputPath) as file:
+    lines = file.readlines()
 
 def match(a, b):
     for c in a:

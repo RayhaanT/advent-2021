@@ -122,7 +122,7 @@ int main() {
         for(int x = 0; x < width; x++) {
             Point *endpoint = probeBasin(&grid[y][x]);
             if(endpoint) {
-                endpoint->basinSize++;                
+                endpoint->basinSize++;
             }
         }
     }

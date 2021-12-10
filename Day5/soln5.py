@@ -1,7 +1,11 @@
 from fractions import Fraction
+import os
 
-inFile = open('../inputs/Day5.txt')
-lines = inFile.readlines()
+dirname = os.path.dirname(__file__)
+inputPath = os.path.join(dirname, '../inputs/Day5.txt')
+
+with open(inputPath) as file:
+    lines = file.readlines()
 
 class Coord:
     def __init__(self, x, y):

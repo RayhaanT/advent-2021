@@ -1,10 +1,16 @@
-inFile = open('../inputs/Day3.txt')
-lines = inFile.readlines()
+import os
+dirname = os.path.dirname(__file__)
+inputPath = os.path.join(dirname, '../inputs/Day3.txt')
+
+with open(inputPath) as file:
+    lines = file.readlines()
+
+lines = [l.strip() for l in lines]
 
 oneTallies = []
 total = len(lines)
 
-for x in range(0, len(lines[0]) - 1):
+for x in range(0, len(lines[0])):
     oneTallies.append(0)
 
 for l in lines:
@@ -19,7 +25,7 @@ for t in oneTallies:
     else:
         final.append(0)
 
-width = len(lines[0]) - 1
+width = len(lines[0])
 delta = 0
 for f in range(0, width):
     delta += (2**(width - f - 1))*final[f]

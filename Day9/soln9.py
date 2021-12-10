@@ -1,5 +1,9 @@
-inFile = open('../inputs/Day9.txt')
-lines = inFile.readlines()
+import os
+dirname = os.path.dirname(__file__)
+inputPath = os.path.join(dirname, '../inputs/Day9.txt')
+
+with open(inputPath) as file:
+    lines = file.readlines()
 
 grid = []
 width = len(lines[0]) - 1
