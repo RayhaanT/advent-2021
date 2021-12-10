@@ -92,3 +92,11 @@ int intComparator (const void * aP, const void * bP) {
     if (b < a) return -1;
     return 0;
 }
+
+int longComparator (const void * aP, const void * bP) {
+    long a = *((long*)aP);
+    long b = *((long*)bP);
+    if (a > b) return  1;
+    if (b < a) return -1;
+    return 0;
+}
