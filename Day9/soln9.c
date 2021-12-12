@@ -97,6 +97,21 @@ Point * probeBasin(Point * point) {
     return endpoint;
 }
 
+int propogate(Point * point) {
+    if(point->height == 9 || point->visited)
+        return 0;
+
+    int basinSize = 1;
+    point->visited = true;
+    for(int i = 0; i < 4; i++) {
+        if(!point->neighbours[i]) {
+            continue;
+        }
+        basinSize += propogate(point->neighbours[i]);
+    }
+    return basinSize;
+}
+
 int main() {
     int height;
     char ** lines = getInputLines(9, &height);
@@ -118,14 +133,17 @@ int main() {
         }
     }
 
-    for(int y = 0; y < height; y++) {
+    // This also works under the assumption that you could get points
+    // not equal to 9 and not in basins. Due to input specification this
+    // is not necessary and we can just branch from the lowpoints
+    /*for(int y = 0; y < height; y++) {
         for(int x = 0; x < width; x++) {
             Point *endpoint = probeBasin(&grid[y][x]);
             if(endpoint) {
                 endpoint->basinSize++;
             }
         }
-    }
+    }*/
 
     int lowPoints = 0;
     int largest[] = {0, 0, 0};
@@ -133,6 +151,12 @@ int main() {
         for(int x = 0; x < width; x++) {
             if(isLocalMin(grid[y][x])) {
                 lowPoints += grid[y][x].height + 1;
+
+                // The more robust solution comments out this line
+                // and uncomments the above block. Not necessary given
+                // input spec of this problem
+                grid[y][x].basinSize = propogate(&grid[y][x]);
+
                 if(grid[y][x].basinSize > largest[0]) {
                     largest[0] = grid[y][x].basinSize;
                     qsort(largest, 3, sizeof(int), intComparator);
