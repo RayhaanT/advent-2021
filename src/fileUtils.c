@@ -100,3 +100,15 @@ int longComparator (const void * aP, const void * bP) {
     if (b < a) return -1;
     return 0;
 }
+
+int charComparator (const void * aP, const void * bP) {
+    char a = *((char*)aP);
+    char b = *((char*)bP);
+    if (a > b) return  1;
+    if (b < a) return -1;
+    return 0;
+}
+
+int stringComparator (const void* a, const void* b) {
+  return strcmp( *(const char**)a, *(const char**)b );
+}
