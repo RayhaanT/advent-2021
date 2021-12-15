@@ -108,6 +108,31 @@ void printOpenSet(Point ** plane, Point ** openSet, int height, int width, bool 
     printf("\n");
 }
 
+bool inPath(Point *p, Point *current) {
+    while(current->parent) {
+        if (current == p) {
+            return true;
+        }
+        current = current->parent;
+    }
+    return false;
+}
+
+void printPath(Point ** plane, Point *end, int height, int width) {
+    for(int y = 0; y < height; y++) {
+        for(int x = 0; x < width; x++) {
+            if (inPath(&plane[y][x], end)) {
+                printf("%d", plane[y][x].risk);
+            }
+            else {
+                printf(" ");
+            }
+        }
+        printf("\n");
+    }
+    printf("\n");
+}
+
 int main() {
     int height;
     char ** lines = getInputLines(15, &height);
@@ -188,7 +213,8 @@ int main() {
     while (current->parent) {
         total += current->risk;
         current = current->parent;
-        printf("x: %d y: %d r: %d\n", current->x, current->y, current->risk);
+        // printf("x: %d y: %d r: %d\n", current->x, current->y, current->risk);
     }
+    // printPath(plane, end, height, width);
     printf("Solution: %d\n", total);
 }
