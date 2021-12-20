@@ -1,4 +1,5 @@
 import itertools
+import copy
 import os
 dirname = os.path.dirname(__file__)
 inputPath = os.path.join(dirname, '../inputs/Day18.txt')
@@ -90,7 +91,7 @@ def explode(node, tree):
             rightFound = True
             
         current = current.parent
-        if current.depth == 0:
+        if current is None:
             break
 
     current = tree
@@ -187,14 +188,29 @@ def betterPrintNum(node):
     betterPrintNum(node.right)
     print(']', end='')
 
+numbers = []
+for l in lines:
+    numbers.append(parseNumber(l)[0])
+
 first = True
 runningSum = None
-for l in lines:
+for num in numbers:
+    n = copy.deepcopy(num)
     if first:
-        runningSum = parseNumber(l)[0]
+        runningSum = n
         first = False
         continue
-    runningSum = reduce(add(runningSum, parseNumber(l)[0]))
-    printNum(runningSum)
+    runningSum = reduce(add(runningSum, n))
+print("First: " + str(magnitude(runningSum)))
 
-# printNum(reduce(runningSum))
+maxMagnitude = 0
+for x in range(0, len(numbers)):
+    for y in range(0, len(numbers)):
+        if x == y:
+            continue
+        n1 = copy.deepcopy(numbers[x])
+        n2 = copy.deepcopy(numbers[y])
+        newMagnitude = magnitude(reduce(add(n1, n2)))
+        maxMagnitude = max(newMagnitude, maxMagnitude)
+
+print("Second: " + str(maxMagnitude))
