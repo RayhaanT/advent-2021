@@ -31,9 +31,6 @@ def update(image, x, y, imgMap):
     for n in range(len(neighbours)):
         if neighbours[n] == '#':
             key += 2**n
-    '''print("(%d, %d)" % (x, y))
-    print(neighbours)
-    print(imgMap[key])'''
     return imgMap[key]
 
 CYCLES = 50
