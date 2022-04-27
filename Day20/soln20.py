@@ -61,6 +61,7 @@ for s in range(CYCLES):
             sx = x + offset
             image[sy][sx] = update(pastState, sx, sy, imgMap)
     pastState = copy.deepcopy(image)
+    os.system("clear")
     printImage(image)
 
 total = 0

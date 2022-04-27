@@ -220,6 +220,7 @@ def dijkstra(firstState, depth=2):
 
         passes += 1
         if passes % 500 == 0:
+            os.system("clear")
             printConfig(lowest, depth)
             print(passes)
         # print(len(openSet))

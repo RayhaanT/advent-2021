@@ -41,6 +41,7 @@ def moveDown(grid):
 def step(grid):
     grid = moveRight(grid)
     grid = moveDown(grid)
+    os.system("clear")
     printGrid(grid)
     return grid
 
